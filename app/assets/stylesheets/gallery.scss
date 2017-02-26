@@ -1,0 +1,27 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+    padding-top: 50px;
+}
+
+.header_illust {
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.panel {
+    padding: 10px;
+}
+
+.illust-box {
+    width: 320px;
+    height: 320px;
+    padding: 10px ;
+    list-style: none; 
+}
+
+.illust-box-image {
+    max-width: 240px;
+    max-height: 240px;
+}
