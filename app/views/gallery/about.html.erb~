@@ -1,8 +1,0 @@
-<body>
-  <%= render "shared/navbar" %>
-
-  <h3>ABOUT</h3>
-  <p>Twitterでイラストを表示する時に"#fun_illustrator"タグを付けるとここでピックアップされます。<br>イラストサークル以外の人もどんどん投稿してもらってかまいません。</p>
-  <p>つくってるひと 明石暁<br>Twitter @akashi_akatsuki<br>GitHub https://github.com/AkashiAkatsuki</p>
-  
-</body>

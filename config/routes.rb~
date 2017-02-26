@@ -1,4 +1,0 @@
-Rails.application.routes.draw do
-  get 'gallery/index', to: 'gallery#index'
-
-end
