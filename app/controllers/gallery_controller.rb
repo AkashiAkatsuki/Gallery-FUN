@@ -17,7 +17,8 @@ class GalleryController < ApplicationController
   def index
     update_illusts
     @illust_data = Illust.all
-    @header_pic_url = Illust.where("tags like ?", "%#header%").sample.pic_url
+    headers = Illust.where("tags like ?", "%#header%")
+    @header_pic_url = (headers.nil?)? headers.sample.pic_url : ""
   end
 
   def about
@@ -28,8 +29,15 @@ class GalleryController < ApplicationController
     
   end
 
+  def illust
+    unless params['tweet_id'].nil?
+      data = Illust.where("tweet_id like ?", params['tweet_id'])
+      @data = data.first unless data.nil?
+    end
+  end
+  
   def update_illusts
-    @client.search("#fun_illustrator exclude:retweets", count: 10).each do |tweet|
+    @client.search("#fun_illustrator exclude:retweets", count: 10 ).each do |tweet|
       if tweet.media?
         Illust.find_or_create_by(tweet_id: tweet.id) do |illust|
           illust.tweet_id = tweet.id.to_s

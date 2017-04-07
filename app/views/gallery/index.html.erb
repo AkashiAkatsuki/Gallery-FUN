@@ -1,7 +1,7 @@
 <body>
   <%= render "shared/navbar" %>
   
-  <img class="header_illust" src=<%= @header_pic_url %>>
+  <img class="header-illust" src=<%= @header_pic_url %>>
 
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -11,7 +11,7 @@
       <div class="container">
 	<% @illust_data.last(6).reverse_each do |data| %>
 	<ul class="illust-box col-md-2">
-	  <a href="<%= 'https://twitter.com/' + data.account + '/status/' + data.tweet_id  %>">
+	  <a href="/gallery/illust/<%= data.tweet_id %>">
 	    <li><img src=<%= data.pic_url %> class="illust-box-image"></li>
 	    <li><%= data.comment.truncate(20) %></li>
 	    <li><%= data.tags.truncate(20) %></li>

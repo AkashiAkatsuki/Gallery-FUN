@@ -1,0 +1,21 @@
+<body>
+  <%= render "shared/navbar" %>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a href="/"><h3 class="panel-title">←BACK</h3></a>
+    </div>
+    <div class="panel-body">
+      <div class="container">
+	<ul class="illust-large">
+	  <li><h3><%= @data.comment %></h3></li>
+	  <li><%= @data.tags %></li>
+	  <a href="https://twitter.com/<%= @data.account %>/status/<%= @data.tweet_id %>">
+	    <li><img src=<%= @data.pic_url %> class="illust-large-image"></li>
+	  </a>
+	</ul>
+      </div>
+    </div>
+  </div>
+
+</body>
