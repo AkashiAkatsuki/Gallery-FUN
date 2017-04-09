@@ -15,7 +15,7 @@ class GalleryController < ApplicationController
   end
   
   def index
-    update_illusts
+    update
     @illust_data = Illust.all
     headers = Illust.where("tags like ?", "%#header%")
     @header_pic_url = (headers.nil?)? headers.sample.pic_url : ""
@@ -26,7 +26,7 @@ class GalleryController < ApplicationController
   end
 
   def member
-    
+    @member_data = Member.all
   end
 
   def illust
@@ -36,27 +36,36 @@ class GalleryController < ApplicationController
     end
   end
   
-  def update_illusts
-    @client.search("#fun_illustrator exclude:retweets", count: 10 ).each do |tweet|
-      if tweet.media?
-        Illust.find_or_create_by(tweet_id: tweet.id) do |illust|
-          illust.tweet_id = tweet.id.to_s
-          illust.pic_url  = tweet.media.first.media_url
-          illust.account  = tweet.user.screen_name
-          illust.comment  = ""
-          illust.tags     = ""
-          tweet.text.split(" ").each do |text|
-            if text.slice(0) == '#'
-              illust.tags << text
-            elsif text.slice(0, 12) == "https://t.co"
+  def update
+    begin
+      @client.search("#fun_illustrator exclude:retweets", count: 10 ).each do |tweet|
+        if tweet.media?
+          Illust.find_or_create_by(tweet_id: tweet.id) do |illust|
+            illust.tweet_id = tweet.id.to_s
+            illust.pic_url  = tweet.media.first.media_url
+            illust.account  = tweet.user.screen_name
+            illust.comment  = ""
+            illust.tags     = ""
+            tweet.text.split(" ").each do |text|
+              if text.slice(0) == '#'
+                illust.tags << text
+              elsif text.slice(0, 12) == "https://t.co"
               # remove pic_url
-            else
-              illust.comment << text
+              else
+                illust.comment << text
+              end
             end
           end
         end
       end
     end
+    @client.following.each do |user|
+      Member.find_or_create_by(account: user.screen_name) do |member|
+        member.name = user.name
+        member.memo = ""
+      end
+    end
+  rescue Twitter::Error::TooManyRequests => e
   end
   
 end

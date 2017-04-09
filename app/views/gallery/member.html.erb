@@ -2,5 +2,15 @@
   <%= render "shared/navbar" %>
   
   <h3>MEMBER</h3>
-  <p>こーじちゅー！</p>
+
+  <table border=1>
+    <tr><th>Name</th><th>Twitter</th><th>Memo</th></tr>
+    <% @member_data.each do |member| %>
+    <tr>
+      <td><%= member.name %></td>
+      <td><%= member.account %></td>
+      <td><%= member.memo %></td>
+    </tr>
+    <% end %>
+  </table>
 </body>
