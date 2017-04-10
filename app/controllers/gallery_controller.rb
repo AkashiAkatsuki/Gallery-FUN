@@ -1,3 +1,4 @@
+
 # coding: utf-8
 require 'twitter'
 
@@ -18,7 +19,7 @@ class GalleryController < ApplicationController
     update
     @illust_data = Illust.all
     headers = Illust.where("tags like ?", "%#header%")
-    @header_pic_url = (headers.nil?)? headers.sample.pic_url : ""
+    @header_pic_url = (headers.nil?)? "" : headers.sample.pic_url
   end
 
   def about
@@ -28,7 +29,7 @@ class GalleryController < ApplicationController
   def member
     @member_data = Member.all
   end
-
+  
   def illust
     unless params['tweet_id'].nil?
       data = Illust.where("tweet_id like ?", params['tweet_id'])
