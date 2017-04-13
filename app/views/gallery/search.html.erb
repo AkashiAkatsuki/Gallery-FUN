@@ -1,15 +1,13 @@
 <body>
   <%= render "shared/navbar" %>
-  
-  <img class="header-illust" src=<%= @header_pic_url %>>
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">新着イラスト</h3>
+      <h3 class="panel-title">イラスト一覧</h3>
     </div>
     <div class="panel-body">
       <div class="container">
-	<% @illust_data.last(6).reverse_each do |data| %>
+	<% @illust_data.last(12).reverse_each do |data| %>
 	<ul class="illust-box col-md-2">
 	  <a href="/gallery/illust/<%= data.tweet_id %>">
 	    <li><img src=<%= data.pic_url %> class="illust-box-image"></li>
@@ -19,8 +17,14 @@
 	</ul>
 	<% end %>
       </div>
-      <a href="/gallery/search?page=1"><p>Show More</p></a>
     </div>
+    <ul class="pager">
+      <% (@illust_data.size/12).times do |i|%>
+      <a href="/gallery/illust/search?keywords=<%= params['keywords'] %>&page=<%= i + 1 %>">
+	<li><%= i + 1 %></li>
+      </a>
+      <% end %>
+    </ul>
   </div>
 
 </body>

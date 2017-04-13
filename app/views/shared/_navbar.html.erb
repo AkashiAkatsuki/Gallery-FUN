@@ -13,6 +13,10 @@
 	<li><a href="/gallery/about">ABOUT</a></li>
 	<li><a href="/gallery/member">MEMBER</a></li>
       </ul>
+      <%= form_tag("/gallery/search", method: "get", class: "navbar-form navbar-right") do %>
+      <%= text_field_tag(:keywords, "", class: "form-control") %>
+      <%= submit_tag("Search", class: "btn btn-outline-success") %>
+      <% end %>
     </div>
   </div>
 </nav>

@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get "gallery/about", to: 'gallery#about'
   get "gallery/member", to: 'gallery#member'
   get "gallery/illust/:tweet_id", to: 'gallery#illust'
+  get "gallery/search", to: 'gallery#search'
 end

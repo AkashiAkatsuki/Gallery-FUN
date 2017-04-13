@@ -1,4 +1,3 @@
-
 # coding: utf-8
 require 'twitter'
 
@@ -32,9 +31,18 @@ class GalleryController < ApplicationController
   
   def illust
     unless params['tweet_id'].nil?
-      data = Illust.where("tweet_id like ?", params['tweet_id'])
+      data = Illust.where("tweet_id =  ?", params['tweet_id'])
       @data = data.first unless data.nil?
     end
+  end
+  
+  def search
+    unless params['keywords'].nil?
+      @illust_data = Illust.where("tags like ?", '%' + params['keywords'] + '%')
+    else
+      @illust_data = Illust.all
+    end
+    @page = (params['page'].nil?)? 1 : params['page']
   end
   
   def update
