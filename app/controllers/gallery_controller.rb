@@ -18,7 +18,7 @@ class GalleryController < ApplicationController
     update
     @illust_data = Illust.all
     headers = Illust.where("tags like ?", "%#header%")
-    @header_pic_url = (headers.nil?)? "" : headers.sample.pic_url
+    @header_pic_url = (headers.nil?)? "" : headers.sample.pic_url.first
   end
 
   def about
@@ -42,7 +42,7 @@ class GalleryController < ApplicationController
     else
       @illust_data = Illust.all
     end
-    @page = (params['page'].nil?)? 1 : params['page']
+    @page = (params['page'].nil?)? 1 : params['page'].to_i
   end
   
   def update
@@ -51,7 +51,7 @@ class GalleryController < ApplicationController
         if tweet.media?
           Illust.find_or_create_by(tweet_id: tweet.id) do |illust|
             illust.tweet_id = tweet.id.to_s
-            illust.pic_url  = tweet.media.first.media_url
+            illust.pic_url  = tweet.media.collect {|media| media.media_url}.join(" ")
             illust.account  = tweet.user.screen_name
             illust.comment  = ""
             illust.tags     = ""
@@ -59,7 +59,7 @@ class GalleryController < ApplicationController
               if text.slice(0) == '#'
                 illust.tags << text
               elsif text.slice(0, 12) == "https://t.co"
-              # remove pic_url
+                # remove pic_url
               else
                 illust.comment << text
               end

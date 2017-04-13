@@ -7,20 +7,20 @@
     </div>
     <div class="panel-body">
       <div class="container">
-	<% @illust_data.last(12).reverse_each do |data| %>
+	<% @illust_data.reverse[(@page-1)*12, 12].each do |data| %>
 	<ul class="illust-box col-md-2">
 	  <a href="/gallery/illust/<%= data.tweet_id %>">
-	    <li><img src=<%= data.pic_url %> class="illust-box-image"></li>
+	    <li><img src=<%= data.pic_url.first %> class="illust-box-image"></li>
 	    <li><%= data.comment.truncate(20) %></li>
-	    <li><%= data.tags.truncate(20) %></li>
+	    <li><%= data.tags.join(" ").truncate(20) %></li>
 	  </a>
 	</ul>
 	<% end %>
       </div>
     </div>
     <ul class="pager">
-      <% (@illust_data.size/12).times do |i|%>
-      <a href="/gallery/illust/search?keywords=<%= params['keywords'] %>&page=<%= i + 1 %>">
+      <% (@illust_data.size/12 + 1).times do |i|%>
+      <a href="/gallery/search?keywords=<%= params['keywords'] %>&page=<%= i + 1 %>">
 	<li><%= i + 1 %></li>
       </a>
       <% end %>

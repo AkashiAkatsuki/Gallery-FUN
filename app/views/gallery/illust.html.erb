@@ -9,9 +9,17 @@
       <div class="container">
 	<ul class="illust-large">
 	  <li><h3><%= @data.comment %></h3></li>
-	  <li><%= @data.tags %></li>
+	  <li>
+	    <% @data.tags.each do |tag| %>
+	    <%= tag %> 
+	    <% end %>
+	  </li>
 	  <a href="https://twitter.com/<%= @data.account %>/status/<%= @data.tweet_id %>">
-	    <li><img src=<%= @data.pic_url %> class="illust-large-image"></li>
+	    <li>
+	      <% @data.pic_url.each do |pic_url| %>
+	      <img src=<%= pic_url %> class="illust-large-image">
+	      <% end %>
+	    </li>
 	  </a>
 	</ul>
       </div>

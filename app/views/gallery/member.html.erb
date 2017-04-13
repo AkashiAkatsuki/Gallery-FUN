@@ -5,7 +5,7 @@
 
   <table border=1>
     <tr><th>Name</th><th>Twitter</th><th>Memo</th></tr>
-    <% @member_data.each do |member| %>
+    <% @member_data.reverse_each do |member| %>
     <tr>
       <td><%= member.name %></td>
       <td><%= member.account %></td>
