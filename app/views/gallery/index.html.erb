@@ -14,6 +14,7 @@
 	  <a href="/gallery/illust/<%= data.tweet_id %>">
 	    <li><img src=<%= data.pic_url.first %> class="illust-box-image"></li>
 	    <li><%= data.comment.truncate(20) %></li>
+	    <li><%= data.account %></li>
 	    <li><%= data.tags.join(" ").truncate(20) %></li>
 	  </a>
 	</ul>
