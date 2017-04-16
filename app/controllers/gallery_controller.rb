@@ -17,16 +17,17 @@ class GalleryController < ApplicationController
   def index
     update
     @illust_data = Illust.all
-    headers = Illust.where("tags like ?", "%#header%")
-    @header_pic_url = (headers.nil?)? "" : headers.sample.pic_url.first
+    @board = Board.all
+    set_header
   end
 
   def about
-    
+    set_header
   end
 
   def member
     @member_data = Member.all
+    set_header
   end
   
   def illust
@@ -34,6 +35,7 @@ class GalleryController < ApplicationController
       data = Illust.where("tweet_id =  ?", params['tweet_id'])
       @data = data.first unless data.nil?
     end
+    set_header
   end
   
   def search
@@ -47,6 +49,7 @@ class GalleryController < ApplicationController
   
   def update
     begin
+      # update illusts
       @client.search("#fun_illustrator exclude:retweets", count: 10 ).each do |tweet|
         if tweet.media?
           Illust.find_or_create_by(tweet_id: tweet.id) do |illust|
@@ -68,13 +71,29 @@ class GalleryController < ApplicationController
         end
       end
     end
+    # update members
     @client.following.each do |user|
       Member.find_or_create_by(account: user.screen_name) do |member|
         member.name = user.name
         member.memo = ""
       end
     end
+    # update board
+    @client.mentions_timeline.each do |tweet|
+      if(Member.exists?(:account => tweet.user.screen_name))
+        Board.find_or_create_by(tweet_id: tweet.id) do |board|
+          board.text = tweet.text.delete("@fun_illustrator ")
+          board.account = tweet.user.screen_name
+        end
+      end
+    end
   rescue Twitter::Error::TooManyRequests => e
+  rescue Twitter::Error::ServiceUnavailable => e
+  end
+
+  def set_header
+    headers = Illust.where("tags like ?", "%#header%")
+    @header_pic_url = (headers.nil?)? "" : headers.sample.pic_url.first
   end
   
 end

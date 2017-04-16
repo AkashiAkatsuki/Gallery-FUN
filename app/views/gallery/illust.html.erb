@@ -1,5 +1,7 @@
 <body>
   <%= render "shared/navbar" %>
+
+  <img class="header-illust" src=<%= @header_pic_url %>>
   
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -11,7 +13,7 @@
 	  <li><h3><%= @data.comment %></h3></li>
 	  <li><%= @data.account %></li>
 	  <li>
-	    <% @data.tags.each do |tag| %>
+	    <% @data.tags_arr.each do |tag| %>
 	    <%= tag %> 
 	    <% end %>
 	  </li>

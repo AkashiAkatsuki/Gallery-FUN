@@ -4,10 +4,9 @@ class Illust < ApplicationRecord
     read_attribute(:pic_url).split(" ")
   end
 
-  
-  def tags
+  def tags_arr
     tags = read_attribute(:tags).split("#")
-    tags.shift 
+    tags.shift
     tags
   end
 

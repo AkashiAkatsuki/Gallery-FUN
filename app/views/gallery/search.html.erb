@@ -1,20 +1,26 @@
 <body>
   <%= render "shared/navbar" %>
 
+  <img class="header-illust" src=<%= @header_pic_url %>>
+  
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">イラスト一覧</h3>
+      <h3 class="panel-title">
+	<%= (params['keywords'].nil?)? "イラスト一覧" : ("検索結果：" + params['keywords']) %>
+      </h3>
     </div>
     <div class="panel-body">
       <div class="container">
 	<% @illust_data.reverse[(@page-1)*12, 12].each do |data| %>
 	<ul class="illust-box col-md-2">
-	  <a href="/gallery/illust/<%= data.tweet_id %>">
-	    <li><img src=<%= data.pic_url.first %> class="illust-box-image"></li>
-	    <li><%= data.comment.truncate(20) %></li>
-	    <li><%= data.account %></li>
-	    <li><%= data.tags.join(" ").truncate(20) %></li>
-	  </a>
+	    <li>
+	      <a href="/gallery/illust/<%= data.tweet_id %>">
+		<img src=<%= data.pic_url.first %> class="illust-box-image">
+		<br><%= data.comment.truncate(20) %></h4>
+	      </a>
+	      <br><%= data.account %>
+	      <br><%= data.tags_arr.join(" ").truncate(20) %>
+	    </li>
 	</ul>
 	<% end %>
       </div>
