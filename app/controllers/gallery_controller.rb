@@ -82,7 +82,8 @@ class GalleryController < ApplicationController
     @client.mentions_timeline.each do |tweet|
       if(Member.exists?(:account => tweet.user.screen_name))
         Board.find_or_create_by(tweet_id: tweet.id) do |board|
-          board.text = tweet.text.slice("@fun_illustrator ")
+          board.text = tweet.text
+          board.text.slice!("@fun_illustrator ")
           board.account = tweet.user.screen_name
         end
       end
