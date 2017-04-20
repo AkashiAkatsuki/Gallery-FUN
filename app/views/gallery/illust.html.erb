@@ -16,6 +16,8 @@
 	    <% @data.tags_arr.each do |tag| %>
 	    <%= tag %> 
 	    <% end %>
+	    <br><%= @data.yosami %> よさみ
+	    <%= button_to "よさみある", {controller: 'gallery', action: 'yosami', id: @data.id}, {method: :post, class: "btn btn-success", onclick: "this.disabled = true;"} %>
 	  </li>
 	  <a href="https://twitter.com/<%= @data.account %>/status/<%= @data.tweet_id %>">
 	    <li>

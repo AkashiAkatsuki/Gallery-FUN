@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   get "gallery/member", to: 'gallery#member'
   get "gallery/illust/:tweet_id", to: 'gallery#illust'
   get "gallery/search", to: 'gallery#search'
+  post "gallery/yosami/:id", to: 'gallery#yosami'
 end

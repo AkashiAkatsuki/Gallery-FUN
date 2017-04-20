@@ -32,7 +32,7 @@ class GalleryController < ApplicationController
   
   def illust
     unless params['tweet_id'].nil?
-      data = Illust.where("tweet_id =  ?", params['tweet_id'])
+      data = Illust.where("tweet_id = ?", params['tweet_id'])
       @data = data.first unless data.nil?
     end
     set_header
@@ -40,11 +40,13 @@ class GalleryController < ApplicationController
   
   def search
     unless params['keywords'].nil?
-      @illust_data = Illust.where("tags like ?", '%' + params['keywords'] + '%')
+      str = '%' + params['keywords'] + '%'
+      @illust_data = Illust.where("(tags like ?) OR (comment like ?) OR (account like ?)", str, str, str)
     else
       @illust_data = Illust.all
     end
     @page = (params['page'].nil?)? 1 : params['page'].to_i
+    set_header
   end
   
   def update
@@ -96,5 +98,13 @@ class GalleryController < ApplicationController
     headers = Illust.where("tags like ?", "%#header%")
     @header_pic_url = (headers.nil?)? "" : headers.sample.pic_url.first
   end
-  
+
+  def yosami
+    illust = Illust.find(params[:id])
+    p illust.comment
+    illust.yosami = 0 if illust.yosami.nil?
+    illust.yosami += 1
+    illust.save  
+  end
+
 end
