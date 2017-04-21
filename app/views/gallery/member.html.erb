@@ -9,8 +9,8 @@
     <tr><th>Name</th><th>Twitter</th><th>Memo</th></tr>
     <% @member_data.reverse_each do |member| %>
     <tr>
-      <td><%= member.name %></td>
-      <td><%= member.account %></td>
+      <td><a href="/gallery/search?keywords=<%= member.account %>"><%= member.name %></a></td>
+      <td><a href="https://twitter.com/<%= member.account %>"><%= member.account %></a></td>
       <td><%= member.memo %></td>
     </tr>
     <% end %>
