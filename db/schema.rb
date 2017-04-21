@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421131303) do
+ActiveRecord::Schema.define(version: 20170418065107) do
 
   create_table "boards", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -18,15 +18,6 @@ ActiveRecord::Schema.define(version: 20170421131303) do
     t.string   "tweet_id"
     t.text     "text"
     t.string   "account"
-  end
-
-  create_table "clients", force: :cascade do |t|
-    t.text     "consumer_key"
-    t.text     "consumer_secret"
-    t.text     "access_token"
-    t.text     "access_token_secret"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
   end
 
   create_table "illusts", force: :cascade do |t|
