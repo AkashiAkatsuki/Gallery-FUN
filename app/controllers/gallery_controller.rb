@@ -6,11 +6,12 @@ class GalleryController < ApplicationController
   before_action :twitter_client, except: :new
   
   def twitter_client
+    client_data = Client.first
     @client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = "3LKb8kM3bANeDWuHVM9c4bvUy"
-      config.consumer_secret     = "qKIMMySNZKIL8CFMuPmi7bb3sjEo06RLKhNcl6YSp7mrBLw2TB"
-      config.access_token        = "833207117288910848-iTn16mQXmBBv1bv5J1p04dbxGAohuij"
-      config.access_token_secret = "tUlT1lE81VQJBeqhADXl3U3UQp9WXFphCyfFjgynkZzYe"
+      config.consumer_key        = client_data.consumer_key
+      config.consumer_secret     = client_data.consumer_secret
+      config.access_token        = client_data.access_token
+      config.access_token_secret = client_data.access_token_secret
     end
   end
   
