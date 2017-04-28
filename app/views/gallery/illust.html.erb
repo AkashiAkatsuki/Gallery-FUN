@@ -1,6 +1,6 @@
 <body>
   <%= render "shared/navbar" %>
-
+  
   <img class="header-illust" src=<%= @header_pic_url %>>
   
   <div class="panel panel-default">
@@ -17,12 +17,16 @@
 	    <a href="/gallery/search?keywords=<%= tag %>"><%= tag %></a>
 	    <% end %>
 	  </li>
-	  <!--
 	  <li>
-	    <%= @data.yosami %> よさみ
-	    <%= button_to "よさみある", {controller: 'gallery', action: 'yosami', id: @data.id}, {method: :post, class: "btn btn-success", id: "yosami_button"} %>
+	    <%= form_tag(url_for(action: 'illust'), remote: true) do %>
+	    <%= text_field_tag :yosami, 1, type: "hidden" %>
+	    <%= text_field_tag :tweet_id, @data.tweet_id, type: "hidden" %>
+	    <%= button_tag class: "icobutton icobutton-7-ccc-red", id: "yosami" do %>
+	    <span class="fa fa-heartbeat fa-3x"></span>
+	    <% end %>
+	    <big><span id="yosami"><%= @data.yosami %></span>よさみ</big>
+	    <% end %>
 	  </li>
-	  -->
 	  <a href="https://twitter.com/<%= @data.account %>/status/<%= @data.tweet_id %>">
 	    <li>
 	      <% @data.pic_url.each do |pic_url| %>
@@ -34,5 +38,5 @@
       </div>
     </div>
   </div>
-
+  
 </body>

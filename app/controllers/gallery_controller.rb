@@ -35,8 +35,15 @@ class GalleryController < ApplicationController
     unless params['tweet_id'].nil?
       data = Illust.where("tweet_id = ?", params['tweet_id'])
       @data = data.first unless data.nil?
+      @data.yosami = 0 if @data.yosami.nil?
+      unless params['yosami'].nil?
+        p params['yosami']
+        @data.yosami += (params['yosami'].to_i >= 0)? -1 : 1
+        @data.save
+      end
     end
     set_header
+    render
   end
   
   def search
@@ -56,6 +63,7 @@ class GalleryController < ApplicationController
       @client.search("#fun_illustrator exclude:retweets", count: 10 ).each do |tweet|
         if tweet.media?
           Illust.find_or_create_by(tweet_id: tweet.id) do |illust|
+            @client.retweet tweet
             illust.tweet_id = tweet.id.to_s
             illust.pic_url  = tweet.media.collect {|media| media.media_url}.join(" ")
             illust.account  = tweet.user.screen_name
@@ -97,15 +105,8 @@ class GalleryController < ApplicationController
 
   def set_header
     headers = Illust.where("tags like ?", "%#header%")
-    @header_pic_url = (headers.nil?)? "" : headers.sample.pic_url.first
+    @header_pic_url = (headers.empty?)? "" : headers.sample.pic_url.first
   end
 
-  def yosami
-    illust = Illust.find(params[:id])
-    p illust.comment
-    illust.yosami = 0 if illust.yosami.nil?
-    illust.yosami += 1
-    illust.save  
-  end
 
 end
