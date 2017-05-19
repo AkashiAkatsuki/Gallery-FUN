@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   get "gallery/illust/:tweet_id", to: 'gallery#illust'
   post "gallery/illust/:tweet_id", to: 'gallery#illust'
   get "gallery/search", to: 'gallery#search'
+
+  resources :topics
+  post "topics/post", to: 'topics#post'
 end

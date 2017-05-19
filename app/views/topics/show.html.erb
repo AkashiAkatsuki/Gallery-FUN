@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @topic.title %>
+</p>
+
+<p>
+  <% @posts.each_with_index do |post, i| %>
+  <div>
+    <div><%= i + 1 %> <%= post.poster %> <%= post.updated_at %></div>
+    <div><%= post.comment %></div>
+  </div>
+  <% end %>
+</p>
+
+<p>
+  <%= form_for(@new_post, url: "/topics/post/") do |f| %>
+  <%= f.hidden_field :topic %>
+  <div class="field">
+    <%= f.label :poster, "名前" %>
+    <%= f.text_field :poster %>
+  </div>
+  <div class="field">
+    <%= f.label :comment, "テキスト" %>
+    <%= f.text_area :comment %>
+  </div>
+  <div class="actions"><%= f.submit "投稿" %></div>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_topic_path(@topic) %> |
+<%= link_to 'Back', topics_path %>
