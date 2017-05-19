@@ -2,7 +2,6 @@
 require 'twitter'
 
 class GalleryController < ApplicationController
-  layout 'gallery'
   before_action :twitter_client, except: :new
   
   def twitter_client

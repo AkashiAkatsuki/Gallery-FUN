@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
+#  before_filter :basic
 
   # GET /topics
   # GET /topics.json
@@ -10,9 +11,7 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.json
   def show
-    @posts = Post.where("topic like ?", params["id"])
-    puts "VVVVVVVVVV"
-    p @posts.first
+    @posts = Post.where("topic = ?", params["id"])
     @new_post = Post.new
     @new_post.topic = params["id"]
   end
@@ -87,4 +86,11 @@ class TopicsController < ApplicationController
     def post_params
       params.require(:post).permit(:topic, :poster, :comment)
     end
+
+    def basic
+      authenticate_or_request_with_http_basic do |user, pass|
+        user == 'gallery' && pass == 'fun'
+      end
+    end
+    
 end

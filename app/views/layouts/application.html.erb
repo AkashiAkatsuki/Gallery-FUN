@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Viewer</title>
+    <title>Gallery-FUN</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag    'gallery', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application',           'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'animocons.min',         'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application',           'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'animocons.min',         'data-turbolinks-track': 'reload' %>
+    
   </head>
 
   <body>
-    <%= yield %>
+    <%= render "shared/navbar" %>  
+    <div style="padding-bottom: 50px;"></div>
+    <div class="gallery">
+      <%= yield %>
+    </div>
   </body>
 </html>
