@@ -62,7 +62,10 @@ class GalleryController < ApplicationController
       @client.search("#fun_illustrator exclude:retweets", count: 10 ).each do |tweet|
         if tweet.media?
           Illust.find_or_create_by(tweet_id: tweet.id) do |illust|
-            @client.retweet tweet unless tweet.retweeted_status
+            begin
+              @client.retweet tweet unless tweet.retweeted
+            rescue Twitter::Error::Forbidden => e
+            end
             illust.tweet_id = tweet.id.to_s
             illust.pic_url  = tweet.media.collect {|media| media.media_url}.join(" ")
             illust.account  = tweet.user.screen_name
