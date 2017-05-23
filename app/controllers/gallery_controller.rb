@@ -18,6 +18,8 @@ class GalleryController < ApplicationController
     update
     @illust_data = Illust.all
     @board = Board.all
+    @posts = Post.all
+    @topics = Topic.all
     set_header
   end
 

@@ -1,15 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @topic.title %>
-</p>
+<p><h3><%= @topic.title %></h3></p>
 
 <p>
   <% @posts.each_with_index do |post, i| %>
   <div>
-    <div><%= i + 1 %> <%= post.poster %> <%= post.updated_at.to_formatted_s(:db) %></div>
-    <div><%= post.comment %></div>
+    <div><%= i + 1 %> <%= post.poster %> <%= post.updated_at %></div>
+    <div><%= simple_format(h(post.comment)) %></div>
   </div>
   <% end %>
 </p>

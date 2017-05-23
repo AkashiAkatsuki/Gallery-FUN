@@ -11,7 +11,20 @@
 	<%= board.text %>
       </a>
       <%= " by " + board.account %>
-      (<%= board.updated_at.in_time_zone('Tokyo').to_formatted_s(:db) %>)
+      (<%= board.updated_at.in_time_zone('Tokyo') %>)
+    </li>
+    <% end %>
+    <br>
+    
+    <li class="list-group-item list-group-item-info"><h3 class="panel-title">新着トピック</h3></li>
+    <% @posts.last(6).reverse_each do |post| %>
+    <li class="list-group-item">
+      <a href="/topics/<%= post.topic %>">
+	<%= Topic.where("id = ?", post.topic).first.title %>
+      </a>
+      <%= " --- " + post.comment %>
+      <%= " by " + post.poster %>
+      (<%= post.updated_at.in_time_zone('Tokyo') %>)
     </li>
     <% end %>
   </ul>
@@ -27,12 +40,12 @@
 	  <li>
 	    <a href="/gallery/illust/<%= data.tweet_id %>">
 	      <img src=<%= data.pic_url.first %> class="illust-box-image">
-	      <p><h4><%= data.comment.truncate(15) %></h4>
+	      <h4><%= data.comment.truncate(15) %></h4>
 	    </a>
 	    <%= data.account %>
-	      <br><%= data.tags_arr.join(" ").truncate(20) %></p>
+	    <br><%= data.tags_arr.join(" ").truncate(20) %>
 	  </li>
-	</ul>
+        </ul>
 	<% end %>
       </div>
       <a href="/gallery/search?page=1"><p>Show More</p></a>
