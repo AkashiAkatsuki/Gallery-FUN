@@ -16,7 +16,7 @@
     <% end %>
     <br>
     
-    <li class="list-group-item list-group-item-info"><h3 class="panel-title">新着トピック</h3></li>
+    <li class="list-group-item list-group-item-success"><h3 class="panel-title">新着トピック</h3></li>
     <% @posts.last(6).reverse_each do |post| %>
     <li class="list-group-item">
       <a href="/topics/<%= post.topic %>">
@@ -24,7 +24,7 @@
       </a>
       <%= " --- " + post.comment %>
       <%= " by " + post.poster %>
-      (<%= post.updated_at.in_time_zone('Tokyo') %>)
+      (<%= post.updated_at %>)
     </li>
     <% end %>
   </ul>
