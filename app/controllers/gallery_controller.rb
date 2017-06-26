@@ -22,11 +22,11 @@ class GalleryController < ApplicationController
     @topics = Topic.all
     set_header
   end
-
+  
   def about
     set_header
   end
-
+  
   def member
     @member_data = Member.all
     set_header
@@ -97,6 +97,7 @@ class GalleryController < ApplicationController
     @client.mentions_timeline.each do |tweet|
       if(Member.exists?(:account => tweet.user.screen_name))
         Board.find_or_create_by(tweet_id: tweet.id) do |board|
+          @client.retweet tweet unless tweet.retweeted
           board.text = tweet.text
           board.text.slice!("@fun_illustrator ")
           board.account = tweet.user.screen_name
@@ -106,11 +107,11 @@ class GalleryController < ApplicationController
   rescue Twitter::Error::TooManyRequests => e
   rescue Twitter::Error::ServiceUnavailable => e
   end
-
+  
   def set_header
     headers = Illust.where("tags like ?", "%#header%")
     @header_pic_url = (headers.empty?)? "" : headers.sample.pic_url.first
   end
-
-
+  
+  
 end
