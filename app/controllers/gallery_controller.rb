@@ -106,12 +106,13 @@ class GalleryController < ApplicationController
     end
   rescue Twitter::Error::TooManyRequests => e
   rescue Twitter::Error::ServiceUnavailable => e
+  rescue Timeout::Error => e
   end
   
   def set_header
     headers = Illust.where("tags like ?", "%#header%")
     @header_pic_url = (headers.empty?)? "" : headers.sample.pic_url.first
   end
-  
+
   
 end
