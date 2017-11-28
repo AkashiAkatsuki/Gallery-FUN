@@ -14,6 +14,16 @@ namespace :one_hour_drawing do
 
   task :announce => :auth do
     if [2, 5].include? Date.today.wday
+      begin
+        client.search('#fun_odaibako exclude:retweets', count: 10).each do |tweet|
+          Theme.find_or_create_by(name: tweet.text.gsub(/ *#fun_odaibako */, '')) do
+            begin
+              client.retweet tweet unless tweet.retweeted
+            rescue Twitter::Error::Forbidden => e
+            end
+          end
+        end
+      end
       themes = Theme.all.shuffle.first(3)
       client.update "ワンドロの時間です。本日のお題は「" + themes[0].name + "」「" + themes[1].name + "」「" + themes[2].name + "」から選んでください。"
     end
