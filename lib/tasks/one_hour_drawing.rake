@@ -1,3 +1,4 @@
+# coding: utf-8
 namespace :one_hour_drawing do
 
   client = nil
@@ -16,6 +17,7 @@ namespace :one_hour_drawing do
     if [2, 5].include? Date.today.wday
       begin
         client.search('#fun_odaibako exclude:retweets', count: 10).each do |tweet|
+          next if client.block?(tweet.user.screen_name)
           Theme.find_or_create_by(name: tweet.text.gsub(/ *#fun_odaibako */, '')) do
             begin
               client.retweet tweet unless tweet.retweeted
