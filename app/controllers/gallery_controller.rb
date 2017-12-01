@@ -31,6 +31,11 @@ class GalleryController < ApplicationController
     @member_data = Member.all
     set_header
   end
+
+  def one_hour
+    @theme_data = Theme.all
+    set_header
+  end
   
   def illust
     unless params['tweet_id'].nil?

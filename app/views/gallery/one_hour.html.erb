@@ -1,0 +1,23 @@
+<body>
+
+  <img class="header-illust" src=<%= @header_pic_url %>>
+  
+  <h3>1H-DRAWING</h3>
+
+  サークルアカウント @fun_illustrator に付いてるワンドロ機能です。
+  17時にランダムで３つのお題をツイートするので、好きなお題を選んで一時間でイラストを描き上げ、 #fun_illustrator のタグを付けて投稿してください。
+  お題をいくつ選ぶかは自由です。
+  また、お題リストに追加したい単語を #fun_odaibako タグを付けてツイートすると次のワンドロから候補になります。
+  
+  <h3>THEME LIST</h3>
+  
+  <table border=1>
+    <tr><th>Name</th></tr>
+    <% @theme_data.reverse_each do |theme| %>
+    <tr>
+      <td><%= theme.name %></td>
+    </tr>
+    <% end %>
+  </table>
+
+</body>
