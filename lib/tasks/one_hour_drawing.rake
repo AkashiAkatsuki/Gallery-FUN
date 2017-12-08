@@ -22,6 +22,9 @@ namespace :one_hour_drawing do
             begin
               client.retweet tweet unless tweet.retweeted
             rescue Twitter::Error::Forbidden => e
+            rescue Twitter::Error::TooManyRequests => e
+            rescue Twitter::Error::ServiceUnavailable => e
+            rescue Timeout::Error => e
             end
           end
         end
