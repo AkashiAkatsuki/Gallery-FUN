@@ -14,24 +14,26 @@ namespace :one_hour_drawing do
   end
 
   task :announce => :auth do
-    if [2, 5].include? Date.today.wday
-      begin
-        client.search('#fun_odaibako exclude:retweets', count: 10).each do |tweet|
-          next if client.block?(tweet.user.screen_name)
-          Theme.find_or_create_by(name: tweet.text.gsub(/ *#fun_odaibako */, '')) do
-            begin
-              client.retweet tweet unless tweet.retweeted
-            rescue Twitter::Error::Forbidden => e
-            rescue Twitter::Error::TooManyRequests => e
-            rescue Twitter::Error::ServiceUnavailable => e
-            rescue Timeout::Error => e
-            end
+    begin
+      client.search('#fun_odaibako exclude:retweets', count: 10).each do |tweet|
+        next if client.block?(tweet.user.screen_name)
+        Theme.find_or_create_by(name: tweet.text.gsub(/ *#fun_odaibako */, '')) do
+          begin
+            client.retweet tweet unless tweet.retweeted
+          rescue Twitter::Error::Forbidden => e
+          rescue Twitter::Error::TooManyRequests => e
+          rescue Twitter::Error::ServiceUnavailable => e
+          rescue Timeout::Error => e
           end
         end
       end
-      themes = Theme.all.shuffle.first(3)
-      client.update "ワンドロの時間です。本日のお題は「" + themes[0].name + "」「" + themes[1].name + "」「" + themes[2].name + "」から選んでください。"
     end
+    themes = Theme.all.shuffle.first(3)
+    client.update "ワンドロの時間です。本日のお題は「" + themes[0].name + "」「" + themes[1].name + "」「" + themes[2].name + "」から選んでください。"
   end
 
+  task :weekly_announce do
+    next unless [2, 5].include? Date.today.wday
+    Rake::Task["one_hour_drawing:announce"].excute
+  end
 end
