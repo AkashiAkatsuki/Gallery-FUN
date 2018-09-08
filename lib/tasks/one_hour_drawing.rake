@@ -29,7 +29,7 @@ namespace :one_hour_drawing do
       end
     end
     themes = Theme.all.shuffle.first(3)
-    client.update "ワンドロの時間です。本日のお題は「" + themes[0].name + "」「" + themes[1].name + "」「" + themes[2].name + "」から選んでください。"
+    client.update ("ワンドロの時間です。本日のお題は「" + themes[0].name + "」「" + themes[1].name + "」「" + themes[2].name + "」から選んでください。").gsub(/\r\n|\r|\n|\s|\t/,"")
   end
 
   task :weekly_announce do
